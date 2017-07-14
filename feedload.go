@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"github.com/asaskevich/govalidator"
 )
 
 const WORKERS = 8
@@ -20,6 +21,10 @@ func main() {
 	}
 
 	rssUrl := os.Args[1]
+	if !govalidator.IsURL(rssUrl) {
+		log.Fatal("Your argument is no valid url")
+	}
+
 	download(rssUrl)
 	fmt.Println("Finished")
 }
@@ -69,13 +74,17 @@ func worker(jobs <-chan gofeed.Item, done chan<- struct{}, progress *mpb.Progres
 		enclosures := item.Enclosures
 		downloadSource := enclosures[0].URL
 
-		//extract the file extension from the url
-		split := strings.Split(downloadSource, ".")
-		fileExt := split[len(split)-1]
+		fileExt := extractFileExt(downloadSource)
 
 		downloadFile(item.Title, fileExt, downloadSource, progress)
 		done <- struct{}{}
 	}
+}
+
+func extractFileExt(downloadSource string) string {
+	//extract the file extension from the url
+	split := strings.Split(downloadSource, ".")
+	return split[len(split) - 1]
 }
 
 func downloadFile(title string, ext string, url string, progress *mpb.Progress) {

@@ -21,7 +21,8 @@ programming language go.
 
 1. Download project
 2. Download dependencies:
-    `go get github.com/mmcdole/gofeed`
+    1. `go get github.com/mmcdole/gofeed`
+    2. `go get github.com/vbauerster/mpb`
 3. Build executable `go build feedload.go`
 
 ## Running
