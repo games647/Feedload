@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/asaskevich/govalidator"
 	"github.com/mmcdole/gofeed"
 	"github.com/vbauerster/mpb"
 	"github.com/vbauerster/mpb/decor"
@@ -10,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"github.com/asaskevich/govalidator"
 )
 
 const WORKERS = 8
@@ -84,7 +84,7 @@ func worker(jobs <-chan gofeed.Item, done chan<- struct{}, progress *mpb.Progres
 func extractFileExt(downloadSource string) string {
 	//extract the file extension from the url
 	split := strings.Split(downloadSource, ".")
-	return split[len(split) - 1]
+	return split[len(split)-1]
 }
 
 func downloadFile(title string, ext string, url string, progress *mpb.Progress) {

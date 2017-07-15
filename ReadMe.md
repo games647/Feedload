@@ -23,6 +23,7 @@ programming language go.
 2. Download dependencies:
     1. `go get github.com/mmcdole/gofeed`
     2. `go get github.com/vbauerster/mpb`
+    3. `go get github.com/asaskevich/govalidator`
 3. Build executable `go build feedload.go`
 
 ## Running
